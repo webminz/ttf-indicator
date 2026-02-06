@@ -13,8 +13,10 @@ class Collector:
 
         ts = datetime.now()
 
-        wd = frcm.WeatherData([
-            frcm.WeatherDataPoint(temperature=temperature, humidity=humidity, wind_speed=ws, timestamp=ts)
+        wd = frcm.WeatherData(data=[
+            frcm.WeatherDataPoint(temperature=temperature, humidity=humidity, wind_speed=ws, timestamp=ts),
+            # frcm needs at least 2 datapoints, so we duplicate the same one
+            frcm.WeatherDataPoint(temperature=temperature, humidity=humidity, wind_speed=ws, timestamp=ts)  
         ])
 
         fire_risk = frcm.compute(wd)

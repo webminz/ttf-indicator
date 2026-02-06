@@ -1,0 +1,23 @@
+[project]
+name = "ttf-indicator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Patrick Stünkel", email = "webminz@googlemail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "frcm",
+]
+
+
+[project.scripts]
+ttf-indicator = "ttf_indicator:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+frcm = { path = "lib/frcm-0.1.0-py3-none-any.whl" }

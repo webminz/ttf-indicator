@@ -1,0 +1,14 @@
+name: TTF Indicator CI-pipeline
+on: [push]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - run: uv run python src/ttf_indicator/test_indicator.py
+        name: Runs unit tests
+      - run: uv run python src/ttf_indicator/test_collector.py
+        name: Runs integration tests

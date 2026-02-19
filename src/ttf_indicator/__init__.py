@@ -1,2 +1,6 @@
+from ttf_indicator.service import app
+import uvicorn
+
 def main() -> None:
-    print("Hello from ttf-indicator!")
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+

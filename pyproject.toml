@@ -14,7 +14,7 @@ dependencies = [
 
 
 [project.scripts]
-ttf-indicator = "ttf_indicator:main"
+ttf-service = "ttf_indicator:main"
 
 [build-system]
 requires = ["hatchling"]

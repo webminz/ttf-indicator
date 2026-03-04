@@ -2,22 +2,22 @@ import unittest
 from unittest.mock import MagicMock
 from ttf_indicator.indicator import Indicator
 from ttf_indicator.collector import Collector
+from frcm import WeatherDataPoint, WeatherData
+from datetime import datetime, timedelta
 
 class CollectorTest(unittest.TestCase):
 
     def test_happy_flow(self):
         collector = Collector()
         indicator = Indicator()
+        src = MagicMock()
+        get_data = MagicMock(return_value=WeatherData(data=[
+            WeatherDataPoint(timestamp=datetime.now() - timedelta(minutes=1), temperature=-8.2, humidity=45.0, wind_speed=1.3),
+            WeatherDataPoint(timestamp=datetime.now(), temperature=-8.2, humidity=45.0, wind_speed=1.3),
+        ]))
+        src.get_data = get_data
 
-
-        temp_sens = MagicMock()
-        temp_sens.read = MagicMock(return_value=-8.2)
-        hum_sens = MagicMock()
-        hum_sens.read = MagicMock(return_value=45.0)
-        ws_sens = MagicMock()
-        ws_sens.read = MagicMock(return_value=1.3)
-
-        result = collector.collect(temp_sens, hum_sens, ws_sens, indicator)
+        result = collector.collect(src, indicator)
 
         self.assertEqual("yellow", result)
 

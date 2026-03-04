@@ -1,27 +1,13 @@
 import frcm 
-from datetime import datetime
 from ttf_indicator.indicator import Indicator
-from ttf_indicator.sensor import Sensor
+from ttf_indicator.source import Source
 
 
 class Collector:
 
-    def collect(self, temp: Sensor, humid: Sensor, wind_speed: Sensor, ind: Indicator):
-        temperature = temp.read()
-        humidity = humid.read()
-        ws = wind_speed.read()
-
-        ts = datetime.now()
-
-        wd = frcm.WeatherData(data=[
-            frcm.WeatherDataPoint(temperature=temperature, humidity=humidity, wind_speed=ws, timestamp=ts),
-            # frcm needs at least 2 datapoints, so we duplicate the same one
-            frcm.WeatherDataPoint(temperature=temperature, humidity=humidity, wind_speed=ws, timestamp=ts)  
-        ])
-
+    def collect(self, src: Source, ind: Indicator):
+        wd = src.get_data()
         fire_risk = frcm.compute(wd)
-        first_risk = fire_risk.firerisks[0]
-
-        ttf = first_risk.ttf
-
+        latest_fire_risk = fire_risk.firerisks[0]
+        ttf = latest_fire_risk.ttf
         return ind.indicate(ttf)

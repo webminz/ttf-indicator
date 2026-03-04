@@ -12,3 +12,7 @@ jobs:
         name: Runs unit tests
       - run: uv run python src/ttf_indicator/test_collector.py
         name: Runs integration tests
+      - run: uv build
+        name: build packages
+
+
